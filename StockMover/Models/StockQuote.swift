@@ -17,6 +17,26 @@ struct StockQuote: Identifiable, Hashable, Sendable {
     let currency: String
     let exchange: String?
 
+    // 本体に宣言して、同じシグネチャの memberwise init が合成されないようにする
+    init(
+        symbol: String, name: String, price: Double?, change: Double?, changePercent: Double?,
+        volume: Double?, averageVolume: Double?, fiftyTwoWeekHigh: Double?, fiftyTwoWeekLow: Double?,
+        marketCap: Double? = nil, currency: String = "USD", exchange: String? = nil
+    ) {
+        self.symbol = symbol
+        self.name = name
+        self.price = price
+        self.change = change
+        self.changePercent = changePercent
+        self.volume = volume
+        self.averageVolume = averageVolume
+        self.fiftyTwoWeekHigh = fiftyTwoWeekHigh
+        self.fiftyTwoWeekLow = fiftyTwoWeekLow
+        self.marketCap = marketCap
+        self.currency = currency
+        self.exchange = exchange
+    }
+
     /// 当日出来高 ÷ 3か月平均出来高
     var volumeRatio: Double? {
         guard let volume, let averageVolume, averageVolume > 0 else { return nil }
@@ -54,25 +74,6 @@ extension StockQuote: Decodable {
         marketCap = c.flexibleDouble(.marketCap)
         currency = (try? c.decodeIfPresent(String.self, forKey: .currency)) ?? "USD"
         exchange = try? c.decodeIfPresent(String.self, forKey: .fullExchangeName)
-    }
-
-    init(
-        symbol: String, name: String, price: Double?, change: Double?, changePercent: Double?,
-        volume: Double?, averageVolume: Double?, fiftyTwoWeekHigh: Double?, fiftyTwoWeekLow: Double?,
-        marketCap: Double? = nil, currency: String = "USD", exchange: String? = nil
-    ) {
-        self.symbol = symbol
-        self.name = name
-        self.price = price
-        self.change = change
-        self.changePercent = changePercent
-        self.volume = volume
-        self.averageVolume = averageVolume
-        self.fiftyTwoWeekHigh = fiftyTwoWeekHigh
-        self.fiftyTwoWeekLow = fiftyTwoWeekLow
-        self.marketCap = marketCap
-        self.currency = currency
-        self.exchange = exchange
     }
 }
 
