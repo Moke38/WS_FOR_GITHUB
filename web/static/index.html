@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>値動きウォッチ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>値動きウォッチ</h1>
+    <div class="controls">
+      <nav class="tabs" id="tabs" role="tablist"></nav>
+      <label class="filter">
+        最低変動率
+        <select id="min-change">
+          <option value="0">すべて</option>
+          <option value="3">±3%以上</option>
+          <option value="5">±5%以上</option>
+          <option value="10">±10%以上</option>
+        </select>
+      </label>
+      <button id="refresh" type="button">更新</button>
+    </div>
+  </header>
+
+  <div id="demo-banner" class="banner" hidden>データを取得できなかったため、デモデータを表示しています</div>
+
+  <main class="layout">
+    <section class="list-pane">
+      <table class="quotes">
+        <thead>
+          <tr>
+            <th>銘柄</th>
+            <th class="num">株価</th>
+            <th class="num">前日比</th>
+            <th class="num col-volume">出来高 平均比</th>
+            <th>注目ポイント</th>
+          </tr>
+        </thead>
+        <tbody id="quote-rows"></tbody>
+      </table>
+      <p id="empty" class="empty" hidden></p>
+    </section>
+
+    <aside class="detail-pane" id="detail">
+      <p class="placeholder">銘柄を選ぶとチャートと詳細を表示します</p>
+    </aside>
+  </main>
+
+  <footer class="app-footer">
+    <span id="updated"></span>
+    <span>データ: Yahoo Finance（遅延あり）。投資判断はご自身の責任で行ってください。</span>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

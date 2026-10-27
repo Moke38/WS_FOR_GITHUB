@@ -1,6 +1,6 @@
 # 値動きウォッチ (StockMover)
 
-米国株の中から「面白い値動き」をしている銘柄を見つけて表示する iOS アプリ（SwiftUI / iOS 17+）。
+米国株の中から「面白い値動き」をしている銘柄を見つけて表示するアプリ。iOS 版（SwiftUI / iOS 17+）とブラウザ版があります。
 
 ## 機能
 
@@ -35,6 +35,22 @@ open StockMover.xcodeproj
 ```
 
 実機で動かす場合は Xcode の Signing & Capabilities で自分のチームを選び、Bundle Identifier を変更してください。
+
+## ブラウザ版 (Windows / Mac / Linux)
+
+`web/` フォルダにブラウザで使える版があります。機能と判定ロジックは iOS 版と同じです。
+
+ブラウザから Yahoo Finance を直接呼ぶことはできない（CORS の制限）ため、付属の小さなサーバー `server.py` が中継します。Python の標準ライブラリだけで動くので、追加のインストールは不要です。
+
+**Windows での使い方**
+
+1. [Python](https://www.python.org/downloads/) 3.8 以降をインストール（インストーラーの「Add python.exe to PATH」にチェック）
+2. `web\start.bat` をダブルクリック
+3. ブラウザで http://127.0.0.1:8000 が自動的に開きます。終了するときはコンソールウィンドウで Ctrl+C
+
+コマンドラインからは `python web/server.py`（`--port 9000` でポート変更、`--no-browser` でブラウザを開かない）。サーバーは `127.0.0.1` でだけ待ち受けるので、他の PC からはアクセスできません。
+
+テスト: `cd web && python -m unittest discover -s tests && node --test tests/analyzer.test.mjs`
 
 ## データソースについて
 
